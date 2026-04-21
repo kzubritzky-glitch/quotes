@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taskflow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">Taskflow</span>
+      </div>
+      <nav class="topbar-nav">
+        <a href="/" class="nav-link active">Tasks</a>
+        <a href="/analytics" class="nav-link">Analytics</a>
+        <a href="/heatmap" class="nav-link">Activity</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero hero--tasks" aria-labelledby="heroTitle">
+      <h1 id="heroTitle">Daily Tasks</h1>
+    </section>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="todo">To Do</button>
+          <button class="filter-btn" data-filter="in-progress">In Progress</button>
+          <button class="filter-btn" data-filter="done">Done</button>
+        </div>
+      </div>
+      <div class="view-toggle" id="viewToggle" role="tablist" aria-label="Task view">
+        <button class="view-toggle-btn active" type="button" data-view="list" role="tab" aria-selected="true">List</button>
+        <button class="view-toggle-btn" type="button" data-view="board" role="tab" aria-selected="false">Board</button>
+      </div>
+      <button class="add-task-btn" id="addTaskBtn" type="button" aria-label="Add task">+ Add Task</button>
+    </div>
+
+    <section class="list-view" id="listView" aria-label="Task list">
+      <ul class="task-list" id="taskList"></ul>
+    </section>
+
+    <section class="board-view hidden" id="boardView" aria-label="Kanban board">
+      <article class="board-column" data-board-column="todo">
+        <header class="board-column-header">
+          <h2 class="board-column-title">To Do</h2>
+          <span class="board-column-count" data-column-count="todo">0</span>
+        </header>
+        <div class="board-column-body" data-column-body="todo"></div>
+      </article>
+
+      <article class="board-column" data-board-column="in-progress">
+        <header class="board-column-header">
+          <h2 class="board-column-title">In Progress</h2>
+          <span class="board-column-count" data-column-count="in-progress">0</span>
+        </header>
+        <div class="board-column-body" data-column-body="in-progress"></div>
+      </article>
+
+      <article class="board-column" data-board-column="done">
+        <header class="board-column-header">
+          <h2 class="board-column-title">Done</h2>
+          <span class="board-column-count" data-column-count="done">0</span>
+        </header>
+        <div class="board-column-body" data-column-body="done"></div>
+      </article>
+    </section>
+  </main>
+
+  <div class="modal-overlay hidden" id="addTaskModal">
+    <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+      <header class="modal-header">
+        <h2 id="modalTitle" class="modal-title">New Task</h2>
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close">&times;</button>
+      </header>
+      <form id="addTaskForm" class="modal-body">
+        <label class="form-label" for="taskTitleInput">Description</label>
+        <input
+          id="taskTitleInput"
+          class="form-input"
+          type="text"
+          placeholder="What needs to be done?"
+          required
+          autocomplete="off"
+        >
+        <label class="form-label" for="taskCategorySelect">Category</label>
+        <select id="taskCategorySelect" class="form-select">
+          <option value="Planning">Planning</option>
+          <option value="Design">Design</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Operations">Operations</option>
+        </select>
+        <label class="form-label" for="taskPrioritySelect">Priority</label>
+        <select id="taskPrioritySelect" class="form-select">
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+        <button type="submit" class="form-submit">Add Task</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

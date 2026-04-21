@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Heatmap - Taskflow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">Taskflow</span>
+      </div>
+      <nav class="topbar-nav">
+        <a href="/" class="nav-link">Tasks</a>
+        <a href="/analytics" class="nav-link">Analytics</a>
+        <a href="/heatmap" class="nav-link active">Activity</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="analytics-container heatmap-page">
+    <div id="heatmapError" class="heatmap-error" hidden></div>
+
+    <section class="heatmap-feature-card" aria-labelledby="heatmapTitle">
+      <header class="heatmap-card-header">
+        <h1 id="heatmapTitle" class="heatmap-card-title">Activity Heatmap</h1>
+        <p class="heatmap-card-subtitle">Last 12 weeks of activity</p>
+      </header>
+
+      <div id="heatmapChart" class="heatmap-chart-mount"></div>
+
+      <div class="heatmap-kpi-grid">
+        <div class="heatmap-kpi-card kpi-card">
+          <div class="kpi-value heatmap-kpi-value" id="heatmapStreak">--</div>
+          <div class="kpi-label">Current streak (days)</div>
+        </div>
+        <div class="heatmap-kpi-card kpi-card">
+          <div class="kpi-value heatmap-kpi-value" id="heatmapLongestStreak">--</div>
+          <div class="kpi-label">Longest streak (days)</div>
+        </div>
+        <div class="heatmap-kpi-card kpi-card">
+          <div class="kpi-value heatmap-kpi-value" id="heatmapTotal">--</div>
+          <div class="kpi-label">Total completions</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="heatmap.js"></script>
+</body>
+</html>
