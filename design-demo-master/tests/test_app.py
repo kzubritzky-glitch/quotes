@@ -19,6 +19,12 @@ def test_heatmap_api_returns_grid(client):
     data = resp.get_json()
     assert "summary" in data
     assert "current_streak_days" in data["summary"]
+    assert "total_activities" in data["summary"]
+    assert "active_days" in data["summary"]
+    assert "peak_activity" in data["summary"]
     assert "weeks" in data
-    assert len(data["weeks"]) == 12
+    assert 52 <= len(data["weeks"]) <= 54
     assert len(data["weeks"][0]["days"]) == 7
+    for week in data["weeks"]:
+        for day in week["days"]:
+            assert 0 <= day["level"] <= 4

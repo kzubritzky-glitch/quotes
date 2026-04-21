@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mount = document.getElementById("heatmapChart");
   const errEl = document.getElementById("heatmapError");
-  const DAY_LABEL_ROWS = [0, 2, 4, 6];
+  /** Sun–Sat columns; y-axis shows Mon, Wed, Fri like the Figma mock */
+  const Y_AXIS_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
 
   function formatTooltipDate(iso) {
     const [y, m, d] = iso.split("-").map(Number);
@@ -15,11 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function render(data) {
-    const { weeks, month_labels, day_labels, summary } = data;
+    const { weeks, month_labels, summary } = data;
 
-    document.getElementById("heatmapStreak").textContent = String(summary.current_streak_days);
-    document.getElementById("heatmapLongestStreak").textContent = String(summary.longest_streak_days);
-    document.getElementById("heatmapTotal").textContent = String(summary.total_completions);
+    document.getElementById("heatmapTotalActivities").textContent = String(
+      summary.total_activities ?? 0,
+    );
+    document.getElementById("heatmapActiveDays").textContent = String(summary.active_days ?? 0);
+    document.getElementById("heatmapPeakActivity").textContent = String(summary.peak_activity ?? 0);
 
     mount.textContent = "";
     mount.style.setProperty("--heatmap-week-count", String(weeks.length));
@@ -54,8 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let r = 0; r < 7; r++) {
       const tick = document.createElement("div");
       tick.className = "heatmap-y-tick";
-      const idx = DAY_LABEL_ROWS.indexOf(r);
-      if (idx >= 0) tick.textContent = day_labels[idx];
+      tick.textContent = Y_AXIS_LABELS[r];
       yAxis.appendChild(tick);
     }
 
@@ -71,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
       for (const day of week.days) {
         const cell = document.createElement("button");
         cell.type = "button";
-        cell.className = `heatmap-cell heatmap-cell--level-${day.level}`;
+        const level = Math.min(Math.max(day.level, 0), 4);
+        cell.className = `heatmap-cell heatmap-cell--level-${level}`;
         const noun = day.count === 1 ? "task" : "tasks";
         const tip = `${formatTooltipDate(day.date)} · ${day.count} ${noun} completed`;
         cell.title = tip;
@@ -99,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     more.textContent = "More";
     const swatches = document.createElement("div");
     swatches.className = "heatmap-legend-swatches";
-    for (let lv = 0; lv <= 5; lv++) {
+    for (let lv = 0; lv <= 4; lv++) {
       const s = document.createElement("span");
       s.className = `heatmap-cell heatmap-cell--level-${lv} heatmap-legend-swatch`;
       s.setAttribute("aria-hidden", "true");

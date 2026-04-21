@@ -1170,7 +1170,19 @@ body {
   max-height: 280px;
 }
 
-/* ---- Activity heatmap (KAN-146) ---- */
+/* ---- Activity heatmap (KAN-146) — Activity Heatmap Figma frame ---- */
+
+.heatmap-shell {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.heatmap-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
 
 .heatmap-page {
   padding-top: 24px;
@@ -1188,39 +1200,44 @@ body {
 
 .heatmap-feature-card {
   background: #fff;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
+  border: none;
+  border-radius: 10px;
   box-shadow:
-    0 10px 15px rgba(0, 0, 0, 0.06),
-    0 4px 6px rgba(0, 0, 0, 0.04);
-  padding: 32px 28px 28px;
+    0 10px 15px rgba(0, 0, 0, 0.1),
+    0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px 32px 28px;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .heatmap-card-header {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .heatmap-card-title {
-  font-size: 1.55rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-  margin-bottom: 6px;
-  line-height: 1.2;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.07px;
+  color: #0a0a0a;
+  margin: 0 0 8px;
+  line-height: 36px;
 }
 
 .heatmap-card-subtitle {
-  font-size: 1rem;
-  color: var(--fg-secondary);
-  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.31px;
+  color: #4a5565;
+  line-height: 24px;
+  margin: 0;
 }
 
 .heatmap-chart-mount {
-  --heatmap-week-count: 12;
+  --heatmap-week-count: 53;
   --heatmap-cell-size: 12px;
   --heatmap-gap: 4px;
-  --heatmap-y-axis-width: 32px;
-  margin-bottom: 28px;
+  --heatmap-y-axis-width: 26px;
+  margin-bottom: 24px;
 }
 
 .heatmap-chart-scroll {
@@ -1248,9 +1265,10 @@ body {
 }
 
 .heatmap-month-cell {
-  font-size: 0.75rem;
-  color: var(--fg-secondary);
-  line-height: 1;
+  font-size: 12px;
+  font-weight: 400;
+  color: #4a5565;
+  line-height: 16px;
   height: 16px;
   display: flex;
   align-items: flex-start;
@@ -1274,9 +1292,10 @@ body {
 }
 
 .heatmap-y-tick {
-  font-size: 0.75rem;
-  color: var(--fg-secondary);
-  line-height: var(--heatmap-cell-size);
+  font-size: 12px;
+  font-weight: 400;
+  color: #4a5565;
+  line-height: 16px;
   height: var(--heatmap-cell-size);
   display: flex;
   align-items: center;
@@ -1303,39 +1322,40 @@ button.heatmap-cell {
   line-height: 0;
   width: var(--heatmap-cell-size);
   height: var(--heatmap-cell-size);
-  border-radius: 50%;
+  border-radius: 6px;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 button.heatmap-cell:hover,
 button.heatmap-cell:focus-visible {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--accent);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #059669;
   outline: none;
 }
 
+/* Intensity ramp aligned to Figma Activity Heatmap (neutral + greens) */
 .heatmap-cell--level-0 {
-  background: var(--card);
+  background: #f3f4f6;
 }
 
 .heatmap-cell--level-1 {
-  background: rgba(245, 78, 0, 0.18);
+  background: #d1fae5;
 }
 
 .heatmap-cell--level-2 {
-  background: rgba(245, 78, 0, 0.35);
+  background: #34d399;
 }
 
 .heatmap-cell--level-3 {
-  background: rgba(245, 78, 0, 0.52);
+  background: #059669;
 }
 
 .heatmap-cell--level-4 {
-  background: rgba(245, 78, 0, 0.72);
+  background: #064e3b;
 }
 
 .heatmap-cell--level-5 {
-  background: rgba(245, 78, 0, 0.92);
+  background: #064e3b;
 }
 
 .heatmap-legend-row {
@@ -1348,16 +1368,16 @@ button.heatmap-cell:focus-visible {
 }
 
 .heatmap-hint {
-  font-size: 0.75rem;
-  color: var(--fg-secondary);
+  font-size: 12px;
+  color: #4a5565;
 }
 
 .heatmap-legend {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.75rem;
-  color: var(--fg-secondary);
+  font-size: 12px;
+  color: #4a5565;
 }
 
 .heatmap-legend-cap {
@@ -1379,18 +1399,37 @@ button.heatmap-cell:focus-visible {
 span.heatmap-legend-swatch {
   width: var(--heatmap-cell-size);
   height: var(--heatmap-cell-size);
-  border-radius: 50%;
+  border-radius: 6px;
 }
 
 .heatmap-kpi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 4px;
+}
+
+.heatmap-kpi-card {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 20px 16px;
+  text-align: left;
+  border: none;
 }
 
 .heatmap-kpi-value {
-  color: var(--fg);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.heatmap-kpi-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #4a5565;
+  line-height: 20px;
 }
 
 @media (max-width: 640px) {
@@ -1399,7 +1438,11 @@ span.heatmap-legend-swatch {
   }
 
   .heatmap-feature-card {
-    padding: 24px 18px 22px;
+    padding: 24px 20px 22px;
+  }
+
+  .heatmap-main {
+    padding: 24px 16px 40px;
   }
 }
 

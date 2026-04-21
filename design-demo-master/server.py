@@ -455,10 +455,19 @@ def _heatmap_summary(conn, today):
     }
 
 
+def _sunday_of_week_containing(d):
+    """Week columns run Sun–Sat (matches Activity Heatmap mock)."""
+    return d - timedelta((d.weekday() + 1) % 7)
+
+
 def _build_heatmap_grid(conn, today):
-    current_week_monday = today - timedelta(days=today.weekday())
-    grid_start = current_week_monday - timedelta(weeks=11)
-    grid_end = current_week_monday + timedelta(days=6)
+    """Last 365 days (inclusive) in a Sun–Sat column grid, aligned to Figma Activity Heatmap."""
+    first_day = today - timedelta(days=364)
+    last_day = today
+    grid_start_sunday = _sunday_of_week_containing(first_day)
+    last_sunday = _sunday_of_week_containing(last_day)
+    num_weeks = (last_sunday - grid_start_sunday).days // 7 + 1
+
     daily_counts_rows = conn.execute(
         """
         SELECT date(completed_at) AS completion_day, COUNT(*) AS completion_count
@@ -469,53 +478,77 @@ def _build_heatmap_grid(conn, today):
           AND date(completed_at) BETWEEN ? AND ?
         GROUP BY date(completed_at)
         """,
-        (grid_start.isoformat(), grid_end.isoformat()),
+        (first_day.isoformat(), last_day.isoformat()),
     ).fetchall()
     daily_counts = {row["completion_day"]: row["completion_count"] for row in daily_counts_rows}
-    max_count = max(daily_counts.values(), default=0)
+
+    max_count = 0
+    probe = first_day
+    while probe <= last_day:
+        max_count = max(max_count, daily_counts.get(probe.isoformat(), 0))
+        probe += timedelta(days=1)
 
     def level_for_count(count):
         if count <= 0:
             return 0
         if max_count <= 1:
-            return 5
-        ratio = count / max_count
-        if ratio <= 0.2:
-            return 1
-        if ratio <= 0.4:
-            return 2
-        if ratio <= 0.6:
-            return 3
-        if ratio <= 0.8:
             return 4
-        return 5
+        ratio = count / max_count
+        if ratio <= 0.25:
+            return 1
+        if ratio <= 0.5:
+            return 2
+        if ratio <= 0.75:
+            return 3
+        return 4
+
+    total_activities = 0
+    active_days = 0
+    probe = first_day
+    while probe <= last_day:
+        c = daily_counts.get(probe.isoformat(), 0)
+        total_activities += c
+        if c > 0:
+            active_days += 1
+        probe += timedelta(days=1)
 
     weeks = []
     month_labels = []
-    for week_index in range(12):
-        week_start = grid_start + timedelta(weeks=week_index)
-        if week_index == 0 or week_start.month != (week_start - timedelta(weeks=1)).month:
-            month_labels.append({"month": week_start.strftime("%b"), "column": week_index})
+    for week_index in range(num_weeks):
+        week_sunday = grid_start_sunday + timedelta(weeks=week_index)
+        prev_sunday = week_sunday - timedelta(weeks=1)
+        if week_index == 0 or week_sunday.month != prev_sunday.month:
+            month_labels.append({"month": week_sunday.strftime("%b"), "column": week_index})
         days = []
         for day_index in range(7):
-            day = week_start + timedelta(days=day_index)
+            day = week_sunday + timedelta(days=day_index)
             day_key = day.isoformat()
-            count = daily_counts.get(day_key, 0)
+            if day < first_day or day > last_day:
+                count = 0
+                level = 0
+            else:
+                count = daily_counts.get(day_key, 0)
+                level = level_for_count(count)
             days.append(
                 {
                     "date": day_key,
                     "count": count,
-                    "level": level_for_count(count),
+                    "level": level,
                 }
             )
-        weeks.append({"week_start": week_start.isoformat(), "days": days})
+        weeks.append({"week_start": week_sunday.isoformat(), "days": days})
 
     return {
-        "range_start": grid_start.isoformat(),
-        "range_end": grid_end.isoformat(),
+        "range_start": first_day.isoformat(),
+        "range_end": last_day.isoformat(),
         "month_labels": month_labels,
         "weeks": weeks,
         "max_daily_count": max_count,
+        "stats": {
+            "total_activities": total_activities,
+            "active_days": active_days,
+            "peak_activity": max_count,
+        },
     }
 
 
@@ -564,15 +597,15 @@ def analytics_heatmap():
     conn.close()
     return jsonify(
         {
-            "summary": summary,
+            "summary": {**summary, **heatmap["stats"]},
             "range": {
                 "start": heatmap["range_start"],
                 "end": heatmap["range_end"],
             },
             "month_labels": heatmap["month_labels"],
             "weeks": heatmap["weeks"],
-            "legend_levels": [0, 1, 2, 3, 4, 5],
-            "day_labels": ["Mon", "Wed", "Fri", "Sun"],
+            "legend_levels": [0, 1, 2, 3, 4],
+            "day_labels": ["Mon", "Wed", "Fri"],
         }
     )
 
