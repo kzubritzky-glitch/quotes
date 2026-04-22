@@ -23,7 +23,8 @@ def test_heatmap_api_returns_grid(client):
     assert "active_days" in data["summary"]
     assert "peak_activity" in data["summary"]
     assert "weeks" in data
-    assert 52 <= len(data["weeks"]) <= 54
+    assert len(data["weeks"]) == 12
+    assert data["day_labels"] == ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     assert len(data["weeks"][0]["days"]) == 7
     for week in data["weeks"]:
         for day in week["days"]:

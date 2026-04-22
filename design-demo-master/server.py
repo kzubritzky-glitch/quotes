@@ -461,12 +461,12 @@ def _sunday_of_week_containing(d):
 
 
 def _build_heatmap_grid(conn, today):
-    """Last 365 days (inclusive) in a Sun–Sat column grid, aligned to Figma Activity Heatmap."""
-    first_day = today - timedelta(days=364)
+    """Twelve Sun–Sat week columns ending in the current week (Figma Activity Heatmap)."""
+    last_sunday = _sunday_of_week_containing(today)
+    grid_start_sunday = last_sunday - timedelta(weeks=11)
+    first_day = grid_start_sunday
     last_day = today
-    grid_start_sunday = _sunday_of_week_containing(first_day)
-    last_sunday = _sunday_of_week_containing(last_day)
-    num_weeks = (last_sunday - grid_start_sunday).days // 7 + 1
+    num_weeks = 12
 
     daily_counts_rows = conn.execute(
         """
@@ -605,7 +605,7 @@ def analytics_heatmap():
             "month_labels": heatmap["month_labels"],
             "weeks": heatmap["weeks"],
             "legend_levels": [0, 1, 2, 3, 4],
-            "day_labels": ["Mon", "Wed", "Fri"],
+            "day_labels": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         }
     )
 

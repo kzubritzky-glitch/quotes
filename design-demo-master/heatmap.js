@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mount = document.getElementById("heatmapChart");
   const errEl = document.getElementById("heatmapError");
-  /** Sun–Sat columns; y-axis shows Mon, Wed, Fri like the Figma mock */
-  const Y_AXIS_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
+  const DEFAULT_DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   function formatTooltipDate(iso) {
     const [y, m, d] = iso.split("-").map(Number);
@@ -16,7 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function render(data) {
-    const { weeks, month_labels, summary } = data;
+    const { weeks, month_labels, summary, day_labels } = data;
+    const yLabels = Array.isArray(day_labels) && day_labels.length === 7 ? day_labels : DEFAULT_DAY_LABELS;
 
     document.getElementById("heatmapTotalActivities").textContent = String(
       summary.total_activities ?? 0,
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let r = 0; r < 7; r++) {
       const tick = document.createElement("div");
       tick.className = "heatmap-y-tick";
-      tick.textContent = Y_AXIS_LABELS[r];
+      tick.textContent = yLabels[r];
       yAxis.appendChild(tick);
     }
 
