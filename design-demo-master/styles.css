@@ -1231,13 +1231,9 @@ body {
   }
 }
 
-/*
- * Activity page palette: Figma Simple Design System
- * https://www.figma.com/design/PrnSz9o01Mu7t3GeaPRkQ0/ — token hex from github.com/figma/sds (src/theme.css)
- */
 .heatmap-shell {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  background: #f5f5f5; /* --sds-color-gray-100 */
+  background: #f9fafb;
   min-height: 100vh;
 }
 
@@ -1252,10 +1248,10 @@ body {
 }
 
 .heatmap-error {
-  background: #fee9e7; /* --sds-color-red-100 */
-  border: 1px solid #fcb3ad; /* --sds-color-red-300 */
-  border-radius: 0.5rem; /* --sds-size-radius-200 */
-  color: #4d0b0a; /* --sds-color-red-900 */
+  background: var(--accent-subtle);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  color: var(--fg);
   padding: 12px 16px;
   margin-bottom: 16px;
   font-size: 0.9rem;
@@ -1266,12 +1262,12 @@ body {
 }
 
 .heatmap-feature-card {
-  background: #ffffff; /* --sds-color-white-1000 */
-  border: 1px solid #d9d9d9; /* --sds-color-gray-300 */
-  border-radius: 0.5rem; /* --sds-size-radius-200 */
+  background: #fff;
+  border: none;
+  border-radius: 10px;
   box-shadow:
-    0 1px 2px rgba(12, 12, 13, 0.05),
-    0 1px 3px rgba(12, 12, 13, 0.1); /* --sds-effects-shadows-drop-shadow-200-ish */
+    0 10px 15px rgba(0, 0, 0, 0.1),
+    0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 32px 32px 28px;
   max-width: 784px;
   margin: 0 auto;
@@ -1281,20 +1277,20 @@ body {
 
 .heatmap-feature-card:hover {
   box-shadow:
-    0 1px 2px rgba(12, 12, 13, 0.06),
-    0 4px 8px rgba(12, 12, 13, 0.12);
+    0 14px 22px rgba(0, 0, 0, 0.12),
+    0 6px 10px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
 .heatmap-card-header {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .heatmap-card-title {
   font-size: 24px;
-  font-weight: 600; /* SDS heading weight */
-  letter-spacing: -0.02em;
-  color: #1e1e1e; /* --sds-color-gray-900 */
+  font-weight: 500;
+  letter-spacing: 0.07px;
+  color: #0a0a0a;
   margin: 0 0 16px;
   line-height: 36px;
 }
@@ -1302,8 +1298,8 @@ body {
 .heatmap-card-subtitle {
   font-size: 16px;
   font-weight: 400;
-  letter-spacing: -0.01em;
-  color: #757575; /* --sds-color-gray-500 */
+  letter-spacing: -0.31px;
+  color: #4a5565;
   line-height: 24px;
   margin: 0;
 }
@@ -1345,7 +1341,7 @@ body {
 .heatmap-month-cell {
   font-size: 12px;
   font-weight: 400;
-  color: #757575; /* --sds-color-gray-500 */
+  color: #4a5565;
   line-height: 16px;
   height: 16px;
   display: flex;
@@ -1373,7 +1369,7 @@ body {
 .heatmap-y-tick {
   font-size: 12px;
   font-weight: 400;
-  color: #757575; /* --sds-color-gray-500 */
+  color: #4a5565;
   line-height: 16px;
   height: var(--heatmap-cell-size);
   display: flex;
@@ -1403,7 +1399,7 @@ button.heatmap-cell {
   line-height: 0;
   width: var(--heatmap-cell-size);
   height: var(--heatmap-cell-size);
-  border-radius: 0.5rem; /* --sds-size-radius-200 */
+  border-radius: 6px;
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -1412,35 +1408,35 @@ button.heatmap-cell {
 
 button.heatmap-cell:hover,
 button.heatmap-cell:focus-visible {
-  filter: brightness(1.05);
+  filter: brightness(1.06);
   transform: scale(1.06);
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #009951; /* white + --sds-color-green-600 */
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #f54900;
   outline: none;
 }
 
-/* Intensity ramp — SDS green scale (positive / activity density) */
+/* Intensity ramp — Figma Activity Heatmap (https://www.figma.com/design/WWmnpGwUsLQ4XqK4bIeRPO/) */
 .heatmap-cell--level-0 {
-  background: #e6e6e6; /* --sds-color-gray-200 — “no activity” vs page bg */
+  background: #f3f4f6;
 }
 
 .heatmap-cell--level-1 {
-  background: #ebffee; /* --sds-color-green-100 */
+  background: #ffd6a8;
 }
 
 .heatmap-cell--level-2 {
-  background: #aff4c6; /* --sds-color-green-300 */
+  background: #ff8904;
 }
 
 .heatmap-cell--level-3 {
-  background: #14ae5c; /* --sds-color-green-500 */
+  background: #f54900;
 }
 
 .heatmap-cell--level-4 {
-  background: #024023; /* --sds-color-green-900 */
+  background: #9f2d00;
 }
 
 .heatmap-cell--level-5 {
-  background: #062d1b; /* --sds-color-green-1000 */
+  background: #9f2d00;
 }
 
 .heatmap-legend-row {
@@ -1449,7 +1445,7 @@ button.heatmap-cell:focus-visible {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 20px;
-  margin-top: 16px;
+  margin-top: 24px;
   animation: heatmapLiftIn 0.38s ease 0.42s backwards;
 }
 
@@ -1457,8 +1453,8 @@ button.heatmap-cell:focus-visible {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  letter-spacing: -0.01em;
-  color: #757575; /* --sds-color-gray-500 */
+  letter-spacing: -0.15px;
+  color: #4a5565;
 }
 
 .heatmap-legend {
@@ -1466,7 +1462,7 @@ button.heatmap-cell:focus-visible {
   align-items: center;
   gap: 10px;
   font-size: 12px;
-  color: #757575; /* --sds-color-gray-500 */
+  color: #4a5565;
 }
 
 .heatmap-legend-cap {
@@ -1488,7 +1484,7 @@ button.heatmap-cell:focus-visible {
 span.heatmap-legend-swatch {
   width: var(--heatmap-legend-swatch-size);
   height: var(--heatmap-legend-swatch-size);
-  border-radius: 0.25rem; /* --sds-size-radius-100 */
+  border-radius: 6px;
 }
 
 .heatmap-kpi-grid {
@@ -1499,11 +1495,11 @@ span.heatmap-legend-swatch {
 }
 
 .heatmap-kpi-card {
-  background: #f5f5f5; /* --sds-color-gray-100 */
-  border-radius: 0.5rem; /* --sds-size-radius-200 */
+  background: #f9fafb;
+  border-radius: 10px;
   padding: 16px;
   text-align: left;
-  border: 1px solid #e6e6e6; /* --sds-color-gray-200 */
+  border: none;
   animation: heatmapLiftIn 0.4s ease backwards;
   transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
@@ -1521,16 +1517,16 @@ span.heatmap-legend-swatch {
 }
 
 .heatmap-kpi-card:hover {
-  background: #e6e6e6; /* --sds-color-gray-200 */
-  box-shadow: 0 1px 2px rgba(12, 12, 13, 0.05);
+  background: #f3f4f6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
 .heatmap-kpi-value {
   font-size: 24px;
   font-weight: 700;
-  color: #1e1e1e; /* --sds-color-gray-900 */
-  letter-spacing: -0.02em;
+  color: #101828;
+  letter-spacing: 0.07px;
   line-height: 32px;
   margin-bottom: 4px;
 }
@@ -1538,9 +1534,9 @@ span.heatmap-legend-swatch {
 .heatmap-kpi-label {
   font-size: 14px;
   font-weight: 400;
-  color: #757575; /* --sds-color-gray-500 */
+  color: #4a5565;
   line-height: 20px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.15px;
 }
 
 @media (max-width: 640px) {
