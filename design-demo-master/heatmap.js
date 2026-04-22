@@ -66,31 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.setAttribute("role", "grid");
     grid.setAttribute("aria-label", "Daily task completions by week");
 
-    let weekColIndex = 0;
-    for (const week of weeks) {
+    weeks.forEach((week, weekIndex) => {
       const col = document.createElement("div");
       col.className = "heatmap-week-col";
       col.setAttribute("role", "row");
-      let dayRowIndex = 0;
+      col.style.setProperty("--week-index", String(weekIndex));
       for (const day of week.days) {
         const cell = document.createElement("button");
         cell.type = "button";
         const level = Math.min(Math.max(day.level, 0), 4);
-        cell.className = `heatmap-cell heatmap-cell--level-${level} heatmap-cell--enter`;
-        cell.style.setProperty(
-          "--heatmap-cell-delay",
-          `${(weekColIndex * 7 + dayRowIndex) * 0.01}s`,
-        );
+        cell.className = `heatmap-cell heatmap-cell--level-${level}`;
         const noun = day.count === 1 ? "task" : "tasks";
         const tip = `${formatTooltipDate(day.date)} · ${day.count} ${noun} completed`;
         cell.title = tip;
         cell.setAttribute("aria-label", tip);
         col.appendChild(cell);
-        dayRowIndex += 1;
       }
       grid.appendChild(col);
-      weekColIndex += 1;
-    }
+    });
 
     body.appendChild(yAxis);
     body.appendChild(grid);
