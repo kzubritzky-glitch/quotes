@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const { weeks, month_labels, summary, day_labels } = data;
     const yLabels = Array.isArray(day_labels) && day_labels.length === 7 ? day_labels : DEFAULT_DAY_LABELS;
 
-    document.getElementById("heatmapCurrentStreak").textContent = String(
-      summary.current_streak_days ?? 0,
+    document.getElementById("heatmapTotalActivities").textContent = String(
+      summary.total_activities ?? 0,
     );
-    document.getElementById("heatmapLongestStreak").textContent = String(
-      summary.longest_streak_days ?? 0,
+    document.getElementById("heatmapActiveDays").textContent = String(
+      summary.active_days ?? 0,
     );
-    document.getElementById("heatmapTotalCompletions").textContent = String(
-      summary.total_completions ?? 0,
+    document.getElementById("heatmapPeakActivity").textContent = String(
+      summary.peak_activity ?? 0,
     );
 
     mount.textContent = "";
