@@ -216,19 +216,7 @@ body {
   .heatmap-legend-row,
   .heatmap-kpi-card {
     animation: none !important;
-  }
-
-  .heatmap-feature-card:hover {
-    transform: none;
-  }
-
-  .heatmap-kpi-card {
     transition: none !important;
-  }
-
-  .heatmap-kpi-card:hover {
-    transform: none;
-    box-shadow: none;
   }
 
   .heatmap-error:not([hidden]) {
@@ -1235,12 +1223,25 @@ body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   background: #f9fafb;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.heatmap-shell .topbar {
+  background: rgba(249, 250, 251, 0.92);
+  border-bottom-color: rgba(15, 23, 42, 0.06);
 }
 
 .heatmap-main {
+  flex: 1;
+  width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   padding: 32px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .heatmap-page {
@@ -1265,21 +1266,15 @@ body {
   background: #fff;
   border: none;
   border-radius: 10px;
+  /* Figma Activity Heatmap frame (node 8:4): drop shadow tokens */
   box-shadow:
-    0 10px 15px rgba(0, 0, 0, 0.1),
-    0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 32px 32px 28px;
+    0 10px 7.5px rgba(0, 0, 0, 0.1),
+    0 4px 3px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  width: 100%;
   max-width: 784px;
   margin: 0 auto;
   animation: heatmapCardIn 0.5s cubic-bezier(0.33, 1, 0.68, 1) backwards;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.heatmap-feature-card:hover {
-  box-shadow:
-    0 14px 22px rgba(0, 0, 0, 0.12),
-    0 6px 10px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
 }
 
 .heatmap-card-header {
@@ -1445,7 +1440,9 @@ button.heatmap-cell:focus-visible {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 20px;
-  margin-top: 24px;
+  /* Figma: ~32px from last grid row to legend container */
+  margin-top: 32px;
+  min-height: 20px;
   animation: heatmapLiftIn 0.38s ease 0.42s backwards;
 }
 
@@ -1501,7 +1498,6 @@ span.heatmap-legend-swatch {
   text-align: left;
   border: none;
   animation: heatmapLiftIn 0.4s ease backwards;
-  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .heatmap-kpi-card:nth-child(1) {
@@ -1514,12 +1510,6 @@ span.heatmap-legend-swatch {
 
 .heatmap-kpi-card:nth-child(3) {
   animation-delay: 0.34s;
-}
-
-.heatmap-kpi-card:hover {
-  background: #f3f4f6;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transform: translateY(-1px);
 }
 
 .heatmap-kpi-value {
