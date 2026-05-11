@@ -1,0 +1,13 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.db
+.idea/
+.cursor/*
+!.cursor/skills/
+*.egg-info/
+dist/
+build/
+.env
+.worktrees/

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Heatmap - Taskflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="heatmap-shell">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">Taskflow</span>
+      </div>
+      <nav class="topbar-nav">
+        <a href="/" class="nav-link">Tasks</a>
+        <a href="/analytics" class="nav-link">Analytics</a>
+        <a href="/heatmap" class="nav-link active">Activity</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="heatmap-main">
+    <div id="heatmapError" class="heatmap-error" hidden></div>
+
+    <section class="heatmap-feature-card" aria-labelledby="heatmapTitle">
+      <header class="heatmap-card-header">
+        <h1 id="heatmapTitle" class="heatmap-card-title">Activity Heatmap</h1>
+        <p class="heatmap-card-subtitle">12 weeks of activity visualization</p>
+      </header>
+
+      <div id="heatmapChart" class="heatmap-chart-mount"></div>
+
+      <div class="heatmap-kpi-grid">
+        <div class="heatmap-kpi-card">
+          <div class="heatmap-kpi-value" id="heatmapTotalActivities">--</div>
+          <div class="heatmap-kpi-label">Total activities</div>
+        </div>
+        <div class="heatmap-kpi-card">
+          <div class="heatmap-kpi-value" id="heatmapActiveDays">--</div>
+          <div class="heatmap-kpi-label">Active days</div>
+        </div>
+        <div class="heatmap-kpi-card">
+          <div class="heatmap-kpi-value" id="heatmapPeakActivity">--</div>
+          <div class="heatmap-kpi-label">Peak activity</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="heatmap.js"></script>
+</body>
+</html>
