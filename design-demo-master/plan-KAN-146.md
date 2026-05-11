@@ -48,8 +48,8 @@
 
 ## Risks
 
-- None significant; API already implemented.
+- Ticket text asks for current streak, longest streak, and total completions above the grid; the Figma mock shows total activities, active days, and peak activity below the grid. The frontend follows the user's pixel-perfect Figma direction, while the API still returns streak fields for compatibility with the Jira requirements.
 
 ## Notion
 
-Notion MCP was not available in this environment; this file serves as the published plan artifact.
+Published plan: https://www.notion.so/35dda74ef04581f591c6c8c4240fec8b
