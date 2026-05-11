@@ -7,7 +7,13 @@
 
 ## Design Reference
 
-- [Activity Heatmap (Figma)](https://www.figma.com/design/WWmnpGwUsLQ4XqK4bIeRPO/Activity-Heatmap?node-id=2-4) — circular cells, legend row, card chrome and typography hierarchy. Heat colors follow Jira AC (`--accent` with opacity), not the Figma placeholder greens.
+- [Activity Heatmap (Figma, node `8:2`)](https://www.figma.com/design/WWmnpGwUsLQ4XqK4bIeRPO/Activity-Heatmap?node-id=8-2) — canonical frame for layout: `#f9fafb` canvas, 784×~757 white card (`10px` radius), shadow `0 10px 7.5px` / `0 4px 3px`, `48×48px` rounded `6px` cells (`8px` gutter), exact orange ramp `#f3f4f6` → `#ffd6a8` → `#ff8904` → `#f54900` → `#9f2d00`, KPI tiles `#f9fafb`/`10px`/`16px` padding.
+
+## Pixel-perfect pass (follow-up)
+
+- Shell: vertically centers main content (`flex`), heatmap topbar tint matches `#f9fafb`.
+- Card: shadow blur radii aligned to Figma; uniform `32px` padding; removed idle hover elevation on card/KPI tiles (design is static in file).
+- Legend row: `32px` top margin (~distance from grid to legend), `min-height: 20px` for hint row.
 
 ## Approach
 
